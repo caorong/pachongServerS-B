@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/commons-codec.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/jackson-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/mybatis-3.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/cr/workspace-sts/weiboSB/lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
