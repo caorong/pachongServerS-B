@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="org.cr.dao.StatusDao">
+
+	<!-- 注id为指定到Dao类中的方法名 -->
+	
+	<!-- 插入记录 -->
+	<insert id="insertStatus" parameterType="org.cr.model.StatusBean">
+		<![CDATA[
+			INSERT INTO tbl_status(wid, uid, createdAt, text, url, 
+								relationShip, name, favorited, truncated, thumbnailPic,
+								bmiddlePic, originalPic, geo, latitude, longitude,
+								repostsCount, commentsCount, attitudescount, repostsFlag, commentsFlag,
+								commentGoodCount, commentBadCount ) 
+			VALUES(#{wid}, #{uid}, #{createdAt}, #{text}, #{url}, 
+				#{relationShip}, #{name}, #{favorited}, #{truncated}, #{thumbnailPic},
+				#{bmiddlePic}, #{originalPic}, #{geo}, #{latitude}, #{longitude},
+				#{repostsCount}, #{commentsCount}, #{attitudescount}, #{repostsFlag}, #{commentsFlag},
+				#{commentGoodCount}, #{commentBadCount} )
+		]]>
+	</insert>
+	
+	<!-- 查询记录是否存在 -->
+	<select id="queryCountByWid" parameterType="string" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM tbl_status where wid=#{wid}
+		]]>
+	</select>
+</mapper>
