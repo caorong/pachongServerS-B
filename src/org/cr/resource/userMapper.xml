@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="org.cr.dao.UserDao">
+
+	<!-- 注id为指定到Dao类中的方法名 -->
+	
+	<!-- 插入记录 -->
+	<insert id="insertUser" parameterType="org.cr.model.UserBean">
+		<![CDATA[
+			INSERT INTO tbl_user
+								(uid, screenName, name, province, city, 
+								location, description, url, profileImageUrl, userDomain,
+								gender, followersCount, friendsCount, statusesCount, favouritesCount,
+								createdAt, following, verified, verifiedType, allowAllActMsg,
+								allowAllComment, followMe, avatarLarge, biFollowersCount, remark,
+								lang, verifiedReason, weihao, type )  
+			VALUES 
+				(#{uid}, #{screenName}, #{name}, #{province}, #{city}, 
+				#{location}, #{description}, #{url}, #{profileImageUrl}, #{userDomain},
+				#{gender}, #{followersCount}, #{friendsCount}, #{statusesCount}, #{favouritesCount},
+				#{createdAt}, #{following}, #{verified}, #{verifiedType}, #{allowAllActMsg},
+				#{allowAllComment}, #{followMe}, #{avatarLarge}, #{biFollowersCount}, #{remark},
+				#{lang}, #{verifiedReason}, #{weihao}, #{type} )  
+		]]>
+	</insert>
+	
+	<!-- 查询记录是否存在 -->
+	<select id="queryCountByUid" parameterType="string" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM tbl_user where uid=#{uid}
+		]]>
+	</select>
+</mapper>

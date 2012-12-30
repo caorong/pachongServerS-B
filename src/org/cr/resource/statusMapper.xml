@@ -9,16 +9,18 @@
 	<!-- 插入记录 -->
 	<insert id="insertStatus" parameterType="org.cr.model.StatusBean">
 		<![CDATA[
-			INSERT INTO tbl_status(wid, uid, createdAt, text, url, 
+			INSERT INTO tbl_status
+								(wid, uid, createdAt, text, url, 
 								relationShip, name, favorited, truncated, thumbnailPic,
 								bmiddlePic, originalPic, geo, latitude, longitude,
 								repostsCount, commentsCount, attitudescount, repostsFlag, commentsFlag,
 								commentGoodCount, commentBadCount ) 
-			VALUES(#{wid}, #{uid}, #{createdAt}, #{text}, #{url}, 
+			VALUES 
+				(#{wid}, #{uid}, #{createdAt}, #{text}, #{url}, 
 				#{relationShip}, #{name}, #{favorited}, #{truncated}, #{thumbnailPic},
 				#{bmiddlePic}, #{originalPic}, #{geo}, #{latitude}, #{longitude},
 				#{repostsCount}, #{commentsCount}, #{attitudescount}, #{repostsFlag}, #{commentsFlag},
-				#{commentGoodCount}, #{commentBadCount} )
+				#{commentGoodCount}, #{commentBadCount} ) 
 		]]>
 	</insert>
 	
