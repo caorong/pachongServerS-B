@@ -26,10 +26,70 @@
 		]]>
 	</insert>
 	
+	<resultMap id="user_model" type="org.cr.model.UserBean">
+		<id column="uid" property="uid"/>
+		<result column="screenName" property="screenName"/>
+		<result column="name" property="name"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		
+		<result column="location" property="location"/>
+		<result column="description" property="description"/>
+		<result column="url" property="url"/>
+		<result column="profileImageUrl" property="profileImageUrl"/>
+		<result column="userDomain" property="userDomain"/>
+		
+		<result column="gender" property="gender"/>
+		<result column="followersCount" property="followersCount"/>
+		<result column="friendsCount" property="friendsCount"/>
+		<result column="statusesCount" property="statusesCount"/>
+		<result column="favouritesCount" property="favouritesCount"/>
+		
+		<result column="createdAt" property="createdAt"/>
+		<result column="following" property="following"/>
+		<result column="verified" property="verified"/>
+		<result column="verifiedType" property="verifiedType"/>
+		<result column="allowAllActMsg" property="allowAllActMsg"/>
+		
+		<result column="allowAllComment" property="allowAllComment"/>
+		<result column="followMe" property="followMe"/>
+		<result column="avatarLarge" property="avatarLarge"/>
+		<result column="biFollowersCount" property="biFollowersCount"/>
+		<result column="remark" property="remark"/>
+		
+		<result column="lang" property="lang"/>
+		<result column="verifiedReason" property="verifiedReason"/>
+		<result column="weihao" property="weihao"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
 	<!-- 查询记录是否存在 -->
 	<select id="queryCountByUid" parameterType="string" resultType="int">
 		<![CDATA[
 			SELECT count(*) FROM tbl_user where uid=#{uid}
 		]]>
 	</select>
+	
+	<!-- 查询单条记录By UID -->
+	<select id="querySingleUserByUid" parameterType="string" resultMap="user_model">
+		<![CDATA[
+			SELECT * FROM tbl_user where uid=#{uid}
+		]]>
+	</select>
+	
+	<!-- 更新记录 -->
+	<update id="updateSingleUser" parameterType="org.cr.model.UserBean">
+		<![CDATA[
+				UPDATE tbl_user  
+				SET 
+					uid=#{uid}, screenName=#{screenName}, name=#{name}, province=#{province}, city=#{city}, 
+					location=#{location}, description=#{description}, url=#{url}, profileImageUrl=#{profileImageUrl}, userDomain=#{userDomain},
+					gender=#{gender}, followersCount=#{followersCount}, friendsCount=#{friendsCount}, statusesCount=#{statusesCount}, favouritesCount=#{favouritesCount},
+					createdAt=#{createdAt}, following=#{following}, verified=#{verified}, verifiedType=#{verifiedType}, allowAllActMsg=#{allowAllActMsg},
+					allowAllComment=#{allowAllComment}, followMe=#{followMe}, avatarLarge=#{avatarLarge}, biFollowersCount=#{biFollowersCount}, remark=#{remark},
+					lang=#{lang}, verifiedReason=#{verifiedReason}, weihao=#{weihao}, type=#{type}
+				WHERE uid=#{uid}
+		]]>
+	</update>
+	
 </mapper>

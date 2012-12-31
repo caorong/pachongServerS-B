@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user id="王石">
+        <uid>1193491727</uid>
+        <type>100</type>
+    </user>
+    <user id="周鸿祎">
+        <uid>1708942053</uid>
+        <type>120</type>
+    </user>
+    <user id="李开复">
+        <uid>1197161814</uid>
+        <type>200</type>
+    </user>
+</users>
