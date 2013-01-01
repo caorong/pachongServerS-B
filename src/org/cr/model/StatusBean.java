@@ -1,7 +1,7 @@
 package org.cr.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -37,10 +37,10 @@ public class StatusBean implements Serializable {
 	private String commentsCount;						 //up up
 	private String attitudescount;						 //up up up
 	private String repostsFlag; 						 //是否对转发进行过深度操作flag
-	private String commentsFlag;						 //是否对评论态度做过操作 flag
+
 	private String commentGoodCount;					//好评数
 	private String commentBadCount; 					 //坏评数
-	
+	private String commentsFlag;						 //是否对评论态度做过操作 flag	
 	
 	
 	public String getUid() {

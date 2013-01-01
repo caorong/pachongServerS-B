@@ -18,6 +18,8 @@ import org.cr.util.DBUtil;
  * @date 2012-12-30
  */
 public class UserDaoImpl implements UserDao {
+	static Logger log = Logger.getLogger(UserDaoImpl.class.getName());
+	
 	private SqlSession session = null;
 
 	private SqlSession getSqlSession() {
@@ -38,16 +40,55 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			log.error("insert user Failed!!! ---> "+user.toString());
 			e.printStackTrace();
+		} finally{
+			session.close();
 		}
 		return ans;
 	}
 
 	@Override
 	public int queryCountByUid(String uid) {
-		session = this.getSqlSession();
-		UserDao userDao = session.getMapper(UserDao.class);
-		return userDao.queryCountByUid(uid);
+		int ans = 0;
+		try {
+			session = this.getSqlSession();
+			UserDao userDao = session.getMapper(UserDao.class);
+			ans = userDao.queryCountByUid(uid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			session.close();
+		}
+		return ans;
 	}
 
-	static Logger log = Logger.getLogger(UserDaoImpl.class.getName());
+	@Override
+	public UserBean querySingleUserByUid(String uid) {
+		UserBean res = null;
+		try {
+			session = this.getSqlSession();
+			UserDao userDao = session.getMapper(UserDao.class);
+			res = userDao.querySingleUserByUid(uid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public void updateSingleUser(UserBean user) {
+		try {
+			session = this.getSqlSession();
+			UserDao userDao = session.getMapper(UserDao.class);
+			userDao.updateSingleUser(user);
+			log.debug("update user"+user.toString());
+			session.commit();
+			log.debug("update Success!!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 }

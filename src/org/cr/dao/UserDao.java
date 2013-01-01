@@ -18,6 +18,21 @@ public interface UserDao {
 	 * @return
 	 * @author caorong
 	 */
-	int queryCountByUid(String uid);
+	public int queryCountByUid(String uid);
 	
+	/**
+	 * @Description 获得一个User实例
+	 * @param uid
+	 * @return UserBean
+	 * @author caorong
+	 */	
+	public UserBean querySingleUserByUid(String uid);
+	
+	/**
+	 * @Description 更新User实例 一般是加type属性
+	 * @param userBean
+	 * @return  
+	 * @author caorong
+	 */	
+	public void updateSingleUser(UserBean userBean);
 }

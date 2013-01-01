@@ -6,7 +6,9 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
+/**
+ * A data class representing Basic user information element
+ */
 public class UserBean implements Serializable {
 
 	private static final long serialVersionUID = -2204517401021442385L;

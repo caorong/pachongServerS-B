@@ -1,9 +1,4 @@
-/**
- * @description 
- * @author caorong
- * @date 2012-12-30
- * 
- */
+
 package org.cr.dao.impl;
 
 import org.apache.ibatis.session.SqlSession;
@@ -56,6 +51,8 @@ public class StatusDaoImpl implements StatusDao {
 		} catch (Exception e) {
 			log.error("query Failed!!! ");
 			e.printStackTrace();
+		} finally{
+			session.close();
 		}
 		return ans;
 	}
