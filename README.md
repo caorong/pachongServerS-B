@@ -1,4 +1,4 @@
 pachongServerS-B
 ================
 
-爬虫端  spring+myBatis
+爬虫server端  myBatis
