@@ -34,9 +34,9 @@ public class UserDaoImpl implements UserDao {
 			session = this.getSqlSession();
 			UserDao userDao = session.getMapper(UserDao.class);
 			ans = userDao.insertUser(user);
-			log.debug("insert user"+user.toString());
+			log.info("insert user"+user.toString());
 			session.commit();
-			log.debug("insert user Success!!! ");
+			log.info("insert user Success!!! ");
 		} catch (Exception e) {
 			log.error("insert user Failed!!! ---> "+user.toString());
 			e.printStackTrace();
@@ -82,9 +82,9 @@ public class UserDaoImpl implements UserDao {
 			session = this.getSqlSession();
 			UserDao userDao = session.getMapper(UserDao.class);
 			userDao.updateSingleUser(user);
-			log.debug("update user"+user.toString());
+			log.info("update user"+user.toString());
 			session.commit();
-			log.debug("update Success!!!");
+			log.info("update Success!!!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

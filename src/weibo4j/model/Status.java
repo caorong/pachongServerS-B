@@ -34,6 +34,7 @@ public class Status extends WeiboResponse implements java.io.Serializable {
 	private double longitude = -1;                       //经度
 	private int repostsCount;                            //转发数
 	private int commentsCount;                           //评论数
+	private int attitudescount; 						 //表态数
 	private String annotations;                          //元数据，没有时不返回此字段
 	private int mlevel;
 	private Visible visible;
@@ -67,6 +68,7 @@ public class Status extends WeiboResponse implements java.io.Serializable {
 			originalPic = json.getString("original_pic");
 			repostsCount = json.getInt("reposts_count");
 			commentsCount = json.getInt("comments_count");
+			attitudescount = json.getInt("attitudes_count");
 			annotations = json.getString("annotations");
 			if(!json.isNull("user"))
 				user = new User(json.getJSONObject("user"));
@@ -228,6 +230,12 @@ public class Status extends WeiboResponse implements java.io.Serializable {
 	public void setCommentsCount(int commentsCount) {
 		this.commentsCount = commentsCount;
 	}
+	public int getAttitudescount() {
+		return attitudescount;
+	}
+	public void setAttitudescount(int attitudescount) {
+		this.attitudescount = attitudescount;
+	}
 	public String getMid() {
 		return mid;
 	}
@@ -306,22 +314,23 @@ public class Status extends WeiboResponse implements java.io.Serializable {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "Status [user=" + user + ", idstr=" + idstr + ", createdAt="
-				+ createdAt + ", id=" + id + ", text=" + text + ", source="
-				+ source + ", favorited=" + favorited + ", truncated="
-				+ truncated + ", inReplyToStatusId=" + inReplyToStatusId
-				+ ", inReplyToUserId=" + inReplyToUserId
+		return "Status [user=" + user + ", createdAt=" + createdAt + ", id="
+				+ id + ", mid=" + mid + ", idstr=" + idstr + ", text=" + text
+				+ ", source=" + source + ", favorited=" + favorited
+				+ ", truncated=" + truncated + ", inReplyToStatusId="
+				+ inReplyToStatusId + ", inReplyToUserId=" + inReplyToUserId
 				+ ", inReplyToScreenName=" + inReplyToScreenName
 				+ ", thumbnailPic=" + thumbnailPic + ", bmiddlePic="
 				+ bmiddlePic + ", originalPic=" + originalPic
 				+ ", retweetedStatus=" + retweetedStatus + ", geo=" + geo
 				+ ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", repostsCount=" + repostsCount + ", commentsCount="
-				+ commentsCount + ", mid=" + mid + ", annotations="
-				+ annotations + ", mlevel=" + mlevel
+				+ commentsCount + ", attitudescount=" + attitudescount
+				+ ", annotations=" + annotations + ", mlevel=" + mlevel
 				+ ", visible=" + visible + "]";
 	}
-
+	
 }

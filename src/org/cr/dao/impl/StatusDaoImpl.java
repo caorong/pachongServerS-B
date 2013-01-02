@@ -28,9 +28,9 @@ public class StatusDaoImpl implements StatusDao {
 			session = this.getSqlSession();
 			StatusDao statusDao = session.getMapper(StatusDao.class);
 			ans = statusDao.insertStatus(status);
-			log.debug("insert Status"+status.toString());
+			log.info("insert Status"+status.toString());
 			session.commit();
-			log.debug("insert Status successed!!!");
+			log.info("insert Status successed!!!");
 		} catch (Exception e) {
 			log.error("insert Status Failed!!! --->"+status.toString());
 			e.printStackTrace();

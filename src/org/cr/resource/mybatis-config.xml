@@ -37,5 +37,6 @@
 	<mappers>
 		<mapper resource="org/cr/resource/userMapper.xml" />
 		<mapper resource="org/cr/resource/statusMapper.xml" />
+		<mapper resource="org/cr/resource/reStatusMapper.xml"/>
 	</mappers>
 </configuration>

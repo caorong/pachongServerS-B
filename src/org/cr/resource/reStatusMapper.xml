@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指定到Dao类 -->
+<mapper namespace="org.cr.dao.ReStatusDao">
+
+	<!-- 插入记录 -->
+	<insert id="insertReStatus" parameterType="org.cr.model.ReStatusBean">
+		<![CDATA[ 
+			INSERT INTO tbl_repost
+								(id,wid,uid,fatherwid,selfwid,selfuid,deepth,text,authorfansflag)
+			VALUES
+				(#{id},#{wid},#{uid},#{fatherwid},#{selfwid},#{selfuid},#{deepth},#{text},#{authorfansflag})
+		]]>
+	</insert>
+
+	<resultMap id="reSt_model" type="org.cr.model.ReStatusBean">
+		<id column="id" property="id"/>
+		<result column="wid" property="wid"/>
+		<result column="uid" property="uid"/>
+		<result column="fatherwid" property="fatherwid"/>
+		<result column="selfwid" property="selfwid"/>
+		<result column="selfuid" property="selfuid"/>
+		<result column="deepth" property="deepth"/>
+		<result column="text" property="text"/>
+		<result column="authorfansflag" property="authorfansflag"/>
+	</resultMap>
+
+	<!-- 查询记录是否存在 -->
+	<select id="queryReStatusByBean" parameterType="org.cr.model.ReStatusBean" resultType="int">
+		<![CDATA[ 
+			SELECT count(*) FROM tbl_repost  
+			where 	authorfansflag=#{authorfansflag} 
+				AND
+					wid=#{wid}  
+				AND 
+					uid=#{uid}  
+				AND 
+					fatherwid=#{fatherwid}  
+				AND 
+					selfwid=#{selfwid} 
+				AND
+					selfuid=#{selfuid} 
+				AND 
+					deepth=#{deepth} 
+		
+		]]>
+	</select>
+
+</mapper>
