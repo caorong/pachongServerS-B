@@ -49,6 +49,9 @@ public class ServiceThread implements Runnable {
 	//验证是否关注原作者的controller
 	private Friendships friendships;
 	
+	// 全局sleep时间
+	private int sleepSec = 4;
+	
 	public ServiceThread(String access_token) {
 		this.access_token = access_token;
 		//从xml里获取给定的type然后update db
@@ -73,10 +76,9 @@ public class ServiceThread implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// 全局sleep时间
-		int sleepSec = 100;
+		
 		// 对每个user抓取的微博条数
-		int getWeiboCount = 10;
+		int getWeiboCount = 100;
 		// 好坏评论
 		int commGoodCount = 0;
 		int commBadCount = 0;
@@ -90,11 +92,20 @@ public class ServiceThread implements Runnable {
 		Timeline timeline = new Timeline();
 		timeline.client.setToken(access_token);
 		
+		/**sleep**/
+		sleep(sleepSec*1000);
+		
 		Comments comments = new Comments();
 		comments.client.setToken(access_token);   
 
+		/**sleep**/
+		sleep(sleepSec*1000);
+		
 		friendships = new Friendships();
 		friendships.client.setToken(access_token);
+		
+		/**sleep**/
+		sleep(sleepSec*1000);
 		
 		//dao 实例化
 		statusDaoImpl = new StatusDaoImpl();
@@ -110,6 +121,9 @@ public class ServiceThread implements Runnable {
 				} catch (WeiboException e) {
 					e.printStackTrace();
 				}
+				/**sleep**/
+				sleep(sleepSec*1000);
+				
 				List<Status> weibolists = statusWapper.getStatuses();
 				for (Status st : weibolists) {
 					//db里没有此 记录 才insert
@@ -121,7 +135,9 @@ public class ServiceThread implements Runnable {
 						} catch (WeiboException e) {
 							e.printStackTrace();
 						}
-
+						/**sleep**/
+						sleep(sleepSec*1000);
+						
 						List<Comment> commentslists = commentWapper.getComments();
 						commGoodCount = 0;
 						commBadCount = 0;
@@ -142,6 +158,9 @@ public class ServiceThread implements Runnable {
 						} catch (WeiboException e) {
 							e.printStackTrace();
 						}
+						/**sleep**/
+						sleep(sleepSec*1000);
+						
 						//获取200条转发Status 集合
 						List<Status> reStatus = reStatusWapper.getStatuses();
 						//
@@ -168,6 +187,9 @@ public class ServiceThread implements Runnable {
 								} catch (WeiboException e) {
 									e.printStackTrace();
 								}
+								/**sleep**/
+								sleep(sleepSec*1000);
+								
 								//转载了第一层的weibo集合
 								List<Status> statuslv2 = statusWapperlv2.getStatuses();
 								//第二层reStatus
@@ -192,6 +214,9 @@ public class ServiceThread implements Runnable {
 										} catch (WeiboException e) {
 											e.printStackTrace();
 										}
+										/**sleep**/
+										sleep(sleepSec*1000);
+										
 										//转载了第二层的weibo集合
 										List<Status> statuslv3 = statusWapperlv3.getStatuses();
 										//第三层reStatus
@@ -272,6 +297,8 @@ public class ServiceThread implements Runnable {
 	 * */
 	private boolean isAuthorFans(String uid, String authorId) {
 		String friends[] = null;
+		/**sleep**/
+		sleep(sleepSec*1000);
 		try {
 			//默认一个用户关注的人不超过2000人
 			friends = friendships.getFriendsIdsByUid(uid, 2000, 0);
