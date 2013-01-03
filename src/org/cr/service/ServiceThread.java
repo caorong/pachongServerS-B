@@ -50,7 +50,7 @@ public class ServiceThread implements Runnable {
 	private Friendships friendships;
 	
 	// 全局sleep时间
-	private int sleepSec = 4;
+	private int sleepSec = 30;
 	
 	public ServiceThread(String access_token) {
 		this.access_token = access_token;
