@@ -28,6 +28,7 @@ import weibo4j.model.CommentWapper;
 import weibo4j.model.Paging;
 import weibo4j.model.Status;
 import weibo4j.model.StatusWapper;
+import weibo4j.model.User;
 import weibo4j.model.WeiboException;
 
 /**
@@ -43,6 +44,7 @@ public class ServiceThread implements Runnable {
 	//需要抓取的人的uid
 	private List<UserXmlBean> userLists;
 	//全局dao实例
+	private UserDaoImpl userDaoImpl;
 	private StatusDaoImpl statusDaoImpl;
 	private ReStatusDaoImpl reStatusDaoImpl;
 	
@@ -50,7 +52,7 @@ public class ServiceThread implements Runnable {
 	private Friendships friendships;
 	
 	// 全局sleep时间
-	private int sleepSec = 30;
+	private int sleepSec = 25;
 	
 	public ServiceThread(String access_token) {
 		this.access_token = access_token;
@@ -110,6 +112,7 @@ public class ServiceThread implements Runnable {
 		//dao 实例化
 		statusDaoImpl = new StatusDaoImpl();
 		reStatusDaoImpl = new ReStatusDaoImpl();
+		userDaoImpl = new UserDaoImpl();
 		
 		while (true) {
 			//遍历 所有的user id
@@ -129,6 +132,11 @@ public class ServiceThread implements Runnable {
 					//db里没有此 记录 才insert
 					if (statusDaoImpl.queryCountByWid(st.getId()) == 0) {
 						/********************* 1 判断weibo的好 坏数  ************************/
+						//物尽其用，将status里的User放进db
+						User user = st.getUser();
+						if(user!=null && userDaoImpl.queryCountByUid(user.getId()) == 0){
+							userDaoImpl.insertUser(this.revertBean(user));
+						}
 						CommentWapper commentWapper = null;
 						try {
 							commentWapper = comments.getCommentById(st.getId(), new Paging(1, 200), 0);
@@ -289,6 +297,15 @@ public class ServiceThread implements Runnable {
 		}
 	}
 
+	/**
+	 * @description  将User转成UserBean
+	 * @param User
+	 * @return Userbean
+	 * */
+	private UserBean revertBean(User user){
+		return new UserBean();
+	}
+	
 	/**
 	 * @descrpition 是否关注原来的作者
 	 * @param String 待check的user id uid
