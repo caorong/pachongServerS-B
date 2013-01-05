@@ -133,9 +133,9 @@ public class ServiceThread implements Runnable {
 					if (statusDaoImpl.queryCountByWid(st.getId()) == 0) {
 						/********************* 1 判断weibo的好 坏数  ************************/
 						//物尽其用，将status里的User放进db
-						User user = st.getUser();
-						if(user!=null && userDaoImpl.queryCountByUid(user.getId()) == 0){
-							userDaoImpl.insertUser(this.revertBean(user));
+						//User user = st.getUser();
+						if(st.getUser()!= null){
+							this.insertUserToDb(st.getUser());
 						}
 						CommentWapper commentWapper = null;
 						try {
@@ -179,6 +179,10 @@ public class ServiceThread implements Runnable {
 							//sina服务器有时返一个空壳  造成nullPointException
 							if (reSt == null || reSt.getRetweetedStatus() == null)
 								continue;
+							// 先物尽其用
+							if (reSt.getUser() != null) {
+								this.insertUserToDb(reSt.getUser());
+							}
 							//先入db再遍历其子节点
 							//条件为--不关注--作者的数据入库
 							this.insertRepostToDb(reSt, repoWid, repoUid, reSt.getRetweetedStatus().getId(), 1 ,"0");
@@ -205,6 +209,10 @@ public class ServiceThread implements Runnable {
 									//sina服务器有时会一个空壳  造成nullPointException
 									if (reStlv2 == null || reStlv2.getRetweetedStatus() == null)
 										continue;
+									// 先物尽其用
+									if (reStlv2.getUser() != null) {
+										this.insertUserToDb(reStlv2.getUser());
+									}
 									//条件为--可能关注--作者的数据入库 
 									this.insertRepostToDb(reStlv2, repoWid, repoUid, reSt.getId(), 2, "1");
 									//验证2层转载人是否关注原作者
@@ -232,6 +240,10 @@ public class ServiceThread implements Runnable {
 											//sina服务器有时会一个空壳  造成nullPointException
 											if (reStlv3 == null || reStlv3.getRetweetedStatus() == null)
 												continue;
+											// 先物尽其用
+											if (reStlv3.getUser() != null) {
+												this.insertUserToDb(reStlv3.getUser());
+											}
 											//条件为--可能关注--作者的数据入库 
 											this.insertRepostToDb(reStlv3, repoWid, repoUid, reStlv2.getId(), 3, "1");
 											//验证3层转载人是否关注原作者  如果2层的flag不是true  直接忽略
@@ -298,12 +310,71 @@ public class ServiceThread implements Runnable {
 	}
 
 	/**
-	 * @description  将User转成UserBean
+	 * @description  将User转成UserBean 入db
 	 * @param User
-	 * @return Userbean
+	 * @return 
 	 * */
-	private UserBean revertBean(User user){
-		return new UserBean();
+	private void insertUserToDb(User u){
+		if(userDaoImpl.queryCountByUid(u.getId()) == 0){
+			UserBean userBean = new UserBean();
+			
+			userBean.setUid(u.getId());
+			userBean.setScreenName(u.getScreenName());
+			userBean.setName(u.getName());
+			userBean.setProvince(u.getProvince()+"");
+			userBean.setCity(u.getCity()+"");
+			
+			userBean.setLocation(u.getLocation());
+			userBean.setDescription(u.getDescription());
+			userBean.setUrl(u.getUrl());
+			userBean.setProfileImageUrl(u.getProfileImageUrl());
+			userBean.setUserDomain(u.getUserDomain());
+			
+			userBean.setGender(u.getGender());
+			userBean.setFollowersCount(u.getFollowersCount()+"");
+			userBean.setFriendsCount(u.getFriendsCount()+"");
+			userBean.setStatusesCount(u.getStatusesCount()+"");
+			userBean.setFavouritesCount(u.getFavouritesCount()+"");
+			
+			userBean.setCreatedAt(u.getCreatedAt());
+			String flag = "1";
+			if(!u.isFollowing()){
+				flag = "0";
+			}
+			userBean.setFollowing(flag);
+			flag = "1";
+			if(!u.isVerified()){
+				flag = "0";
+			}
+			userBean.setVerified(flag);
+			userBean.setVerifiedType(u.getverifiedType()+"");
+			flag = "1";
+			if(!u.isAllowAllActMsg()){
+				flag = "0";
+			}
+			userBean.setAllowAllActMsg(flag);
+			
+			flag = "1";
+			if(!u.isallowAllComment()){
+				flag = "0";
+			}
+			userBean.setAllowAllComment(flag);
+			flag = "1";
+			if(!u.isFollowMe()){
+				flag = "0";
+			}
+			userBean.setFollowMe(flag);
+			userBean.setAvatarLarge(u.getAvatarLarge());
+			userBean.setBiFollowersCount(u.getBiFollowersCount()+"");
+			userBean.setRemark(u.getRemark());
+			
+			userBean.setLang(u.getLang());
+			userBean.setVerifiedReason(u.getVerifiedReason());
+			userBean.setWeihao(u.getWeihao());
+			
+			log.debug("begin to insert data"+userBean.toString());
+			userDaoImpl.insertUser(userBean);
+		}
 	}
 	
 	/**
