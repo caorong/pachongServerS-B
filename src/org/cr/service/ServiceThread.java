@@ -157,6 +157,10 @@ public class ServiceThread implements Runnable {
 							} else if (ans == 2) {
 								commBadCount++;
 							}
+							// 物尽其用
+							if (comm.getUser() != null) {
+								this.insertUserToDb(comm.getUser());
+							}
 						}
 
 						/********************* 2 进行weibo深度处理     2.1入 db *********************/
