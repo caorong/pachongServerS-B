@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指定到Dao类 -->
+<mapper namespace="org.cr.dao.RelationPathDao">
+
+	<!-- 插入记录 -->
+	<insert id="insertRelationPathBean" parameterType="org.cr.model.RelationPathBean">
+		<![CDATA[ 
+			INSERT INTO tbl_relationPath
+									(id,Centeruid,uid,xstart,ystart,xend,yend,name,noder,deep)
+			VALUES
+				(#{id},#{Centeruid},#{uid},#{xstart},#{ystart},#{xend},#{yend},#{name},#{noder},#{deep})
+		]]>
+	</insert>
+
+	<!-- 查询记录是否存在 -->
+	<select id="queryRelationPathBeanByBean" parameterType="org.cr.model.RelationPathBean" resultType="int">
+		<![CDATA[ 
+			SELECT count(*) FROM tbl_relationPath
+			where   Centeruid=#{Centeruid} 
+				AND
+					uid=#{uid} 
+				AND
+					xstart=#{xstart} 
+				AND
+					ystart=#{ystart} 
+				AND
+					xend=#{xend} 
+				AND
+					yend=#{yend} 
+				AND
+					noder=#{noder} 
+				AND 
+					deep=#{deep} 
+		]]>
+	</select>
+</mapper>

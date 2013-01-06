@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import org.apache.log4j.Logger;
 import org.cr.service.ServiceGetAuthorUidThread;
 import org.cr.service.ServiceThread;
+import org.cr.service.ServletRelationShipThread;
 
 import weibo4j.Oauth;
 import weibo4j.http.AccessToken;
@@ -57,7 +58,8 @@ public class Main implements Runnable{
 		}
 		//my uid: 1057297283
 		String access_token = accessToken.getAccessToken();
-		new Thread(new ServiceThread(access_token)).start();
+		new Thread(new ServletRelationShipThread(access_token)).start();
+//		new Thread(new ServiceThread(access_token)).start();
 //		new Thread(new ServiceGetAuthorUidThread(access_token)).start();
 	}
  	

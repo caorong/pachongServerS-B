@@ -38,5 +38,6 @@
 		<mapper resource="org/cr/resource/userMapper.xml" />
 		<mapper resource="org/cr/resource/statusMapper.xml" />
 		<mapper resource="org/cr/resource/reStatusMapper.xml"/>
+		<mapper resource="org/cr/resource/relationPathMapper.xml"/>
 	</mappers>
 </configuration>
