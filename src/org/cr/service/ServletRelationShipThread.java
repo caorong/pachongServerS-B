@@ -44,7 +44,9 @@ public class ServletRelationShipThread implements Runnable {
 		relationPathDaoImpl = new RelationPathDaoImpl();
 		
 		// 谁的uid用户关系
-		String printedUid = "1796537952";
+		String printedUid = "1057297283";
+		// 此人的名字
+		String printedName = "Lelouchcr";
 		// 每层获取多少条
 		int getRelationCount = 10;
 
@@ -76,14 +78,14 @@ public class ServletRelationShipThread implements Runnable {
 		int ylv2e;
 
 		// 半径 lv1&lv2
-		int rlv1 = 200;
-		int rlv2 = 80;
+		int rlv1 = 400;
+		int rlv2 = 160;
 		// 中心点
 		/**
 		 * $(window).width(); 1366. $(window).height(); 600
 		 * */
 		// xlv1e = xlv1s + rlv1
-		RelationPathBean relationPathBean = new RelationPathBean(printedUid,printedUid, 660 + "", 300 + "", 660 + "", 300 + "", "曹融", "10","0");
+		RelationPathBean relationPathBean = new RelationPathBean(printedUid,printedUid, 660 + "", 300 + "", 660 + "", 300 + "", printedName, "10","0");
 		relationlists.add(relationPathBean);
 		this.insertRelationPathToDb(relationPathBean);
 //		relationPathDaoImpl.insertRelationPathBean(relationPathBean);
