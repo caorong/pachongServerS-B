@@ -43,10 +43,10 @@ public class ServletRelationShipThread implements Runnable {
 		userDaoImpl = new UserDaoImpl();
 		relationPathDaoImpl = new RelationPathDaoImpl();
 		
-		// 谁的uid用户关系
-		String printedUid = "1057297283";
+		// 谁的uid用户关系      Lelouchcr:1057297283
+		String printedUid = "2060033304";
 		// 此人的名字
-		String printedName = "Lelouchcr";
+		String printedName = "__SSSamuel";
 		// 每层获取多少条
 		int getRelationCount = 10;
 
@@ -66,26 +66,30 @@ public class ServletRelationShipThread implements Runnable {
 
 		// lv1层坐标 start
 		int xlv1s = 660;
-		int ylv1s = 300;
+		int ylv1s = 440;
 		// end
 		int xlv1e = 660;
-		int ylv1e = 300;
+		int ylv1e = 440;
 		// lv2层坐标
-		int xlv2s;
-		int ylv2s;
+		int xlv2s = 0;
+		int ylv2s = 0;
 		// end
-		int xlv2e;
-		int ylv2e;
+		int xlv2e = 0;
+		int ylv2e = 0;
 
+		// 间隔的倍数  360/interval
+		int interval = 24;
 		// 半径 lv1&lv2
-		int rlv1 = 400;
-		int rlv2 = 160;
+		int rlv1 = 230;
+		int rlv2 = 100;
 		// 中心点
 		/**
 		 * $(window).width(); 1366. $(window).height(); 600
 		 * */
 		// xlv1e = xlv1s + rlv1
-		RelationPathBean relationPathBean = new RelationPathBean(printedUid,printedUid, 660 + "", 300 + "", 660 + "", 300 + "", printedName, "10","0");
+		RelationPathBean relationPathBean = new RelationPathBean(printedUid,
+				printedUid, xlv1s + "", ylv1s + "", xlv1s + "", ylv1s + "",
+				printedName, "20", "0");
 		relationlists.add(relationPathBean);
 		this.insertRelationPathToDb(relationPathBean);
 //		relationPathDaoImpl.insertRelationPathBean(relationPathBean);
@@ -110,11 +114,25 @@ public class ServletRelationShipThread implements Runnable {
 				}
 				// 计算坐标
 				xlv1s = 660;
-				ylv1s = 300;
-				xlv1e = (int) (xlv1s + rlv1* Math.cos(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
-				ylv1e = (int) (ylv1s + rlv1* Math.sin(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
+				ylv1s = 440;
+				//version1  平均
+//				xlv1e = (int) (xlv1s + rlv1* Math.cos(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
+//				ylv1e = (int) (ylv1s + rlv1* Math.sin(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
+				//version2 
+				if (ilv1 % 4 == 0) {
+					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (0 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (0 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+				} else if(ilv1 %4 == 1){
+					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (90 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (90 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+				} else if(ilv1 %4 == 2){
+					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (180 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (180 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+				} else if(ilv1 %4 == 3){
+					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (270 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (270 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+				}  
 				ilv1++;
-
 				// 创建并插入path队列
 				RelationPathBean relatlv1 = new RelationPathBean(printedUid,u1.getId(), xlv1s + "", ylv1s + "", xlv1e + "", ylv1e
 								+ "", u1.getName(),lengthlv1 + "" , "1");
@@ -130,6 +148,8 @@ public class ServletRelationShipThread implements Runnable {
 				List<User> lv2Users = userWapper.getUsers();
 				// 2层的大小
 				lengthlv2 = lv2Users.size();
+				// 2层 初始化
+				ilv2 = 0;
 				for (User u2 : lv2Users) {
 					// 防止 注销
 					if (u2 != null) {
@@ -145,8 +165,23 @@ public class ServletRelationShipThread implements Runnable {
 						// 第一层的头是第二层的末尾 初始化
 						xlv2s = xlv1e;
 						ylv2s = ylv1e;
-						xlv2e = (int) (xlv2s + rlv2* Math.cos(ilv2 * (360 / lengthlv2)* (Math.PI / 180)));
-						ylv2e = (int) (ylv2s + rlv2* Math.sin(ilv2 * (360 / lengthlv2)* (Math.PI / 180)));
+						//version 1
+//						xlv2e = (int) (xlv2s + rlv2* Math.cos(ilv2 * (360 / lengthlv2)* (Math.PI / 180)));
+//						ylv2e = (int) (ylv2s + rlv2* Math.sin(ilv2 * (360 / lengthlv2)* (Math.PI / 180)));
+						//version 2
+						if (ilv2 % 4 == 0) {
+							xlv2e = (int) (xlv2s + rlv2 * Math.cos(( (0 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+							ylv2e = (int) (ylv2s + rlv2 * Math.sin(( (0 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+						} else if(ilv2 %4 == 1){
+							xlv2e = (int) (xlv2s + rlv2 * Math.cos(( (90 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+							ylv2e = (int) (ylv2s + rlv2 * Math.sin(( (90 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+						} else if(ilv2 %4 == 2){
+							xlv2e = (int) (xlv2s + rlv2 * Math.cos(( (180 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+							ylv2e = (int) (ylv2s + rlv2 * Math.sin(( (180 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+						} else if(ilv2 %4 == 3){
+							xlv2e = (int) (xlv2s + rlv2 * Math.cos(( (270 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+							ylv2e = (int) (ylv2s + rlv2 * Math.sin(( (270 + (ilv2/4 + 1) * (360 / interval))) * (Math.PI / 180)));
+						}
 						ilv2++;
 						// 先检测list里是否已经有uid相同的人
 						for (RelationPathBean retmp : relationlists) {
