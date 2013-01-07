@@ -42,13 +42,13 @@ public class ServletRelationShipThread implements Runnable {
 		// init
 		userDaoImpl = new UserDaoImpl();
 		relationPathDaoImpl = new RelationPathDaoImpl();
-		
-		// 谁的uid用户关系      Lelouchcr:1057297283
-		String printedUid = "2060033304";
+		//__SSSamuel  2060033304
+		// 谁的uid用户关系      Lelouchcr:1057297283   szj:1880901514
+		String printedUid = "1057297283";
 		// 此人的名字
-		String printedName = "__SSSamuel";
+		String printedName = "Lelouchcr";
 		// 每层获取多少条
-		int getRelationCount = 10;
+		int getRelationCount = 50;
 
 		Friendships friendships = new Friendships();
 		friendships.client.setToken(access_token);
@@ -118,7 +118,7 @@ public class ServletRelationShipThread implements Runnable {
 				//version1  平均
 //				xlv1e = (int) (xlv1s + rlv1* Math.cos(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
 //				ylv1e = (int) (ylv1s + rlv1* Math.sin(ilv1 * (360 / lengthlv1) * (Math.PI / 180)));
-				//version2 
+				//version2  分4个区 固定角度
 				if (ilv1 % 4 == 0) {
 					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (0 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
 					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (0 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
@@ -132,6 +132,9 @@ public class ServletRelationShipThread implements Runnable {
 					xlv1e = (int) (xlv1s + rlv1 * Math.cos(( (270 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
 					ylv1e = (int) (ylv1s + rlv1 * Math.sin(( (270 + (ilv1/4 + 1) * (360 / interval))) * (Math.PI / 180)));
 				}  
+				//version 3 动态的划定长度
+				
+				
 				ilv1++;
 				// 创建并插入path队列
 				RelationPathBean relatlv1 = new RelationPathBean(printedUid,u1.getId(), xlv1s + "", ylv1s + "", xlv1e + "", ylv1e
